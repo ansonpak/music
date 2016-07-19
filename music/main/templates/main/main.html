@@ -1,0 +1,34 @@
+<!doctype html>
+{% load staticfiles %}
+<html>
+<head>
+<title>music</title>
+<meta charset=utf-8>
+<link rel=stylesheet href={% static 'main/css/main.css' %}>
+</head>
+<body>
+<div id=wrapper>
+<header>
+<div id=headerLeft>
+<h1>{% block heading %}music{% endblock %}</h1>
+</div>
+<div id=headerRight>
+<ul>
+{% if user.is_authenticated %}
+  <li><a href={% url 'account:userLogout' %}>登出 ({{user.username}})</a></li>
+{% else %}
+  <li><a href={% url 'account:register' %}>註冊</a></li>
+  <li><a href={% url 'account:userLogin' %}>登入</a></li>
+{% endif %}
+</ul>
+</div>
+</header>
+{% if messages %}
+ {% for message in messages %}
+ <p {% if message.tags %} class={{message.tags}} {% endif %}>{{message}}</p>
+ {% endfor %}
+{% endif %}
+{% block content %}
+{% endblock %}
+</body>
+</html>
