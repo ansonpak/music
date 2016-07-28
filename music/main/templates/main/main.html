@@ -4,10 +4,13 @@
 <head>
 <title>music</title>
 <meta charset=utf-8>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel=stylesheet href={% static 'main/css/main.css' %}>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 </head>
 <body>
-<div id=wrapper>
+<div id=wrapper class="container">
 <header>
 <div id=headerLeft>
 <h1>{% block heading %}music{% endblock %}</h1>
@@ -16,6 +19,7 @@
 <ul>
 {% if user.is_authenticated %}
   <li><a href={% url 'account:userLogout' %}>登出 ({{user.username}})</a></li>
+  <li><a href={% url 'account:account' user.id %}>個人首頁</a></li>
 {% else %}
   <li><a href={% url 'account:register' %}>註冊</a></li>
   <li><a href={% url 'account:userLogin' %}>登入</a></li>
@@ -30,5 +34,6 @@
 {% endif %}
 {% block content %}
 {% endblock %}
+</div>
 </body>
 </html>

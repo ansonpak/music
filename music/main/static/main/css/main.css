@@ -53,18 +53,18 @@ div#headerRight a:hover {
   color: #68a4c4;
 }
 #latestnews{
-	width:80%;
+  width:80%;
   margin: 0 auto;
 }
 #latestnews table{
-	width:100%;
+  width:100%;
 }
 #latestnews th{
-	width:50%;
-	padding:10px 20px;    
+  width:50%;
+  padding:10px 20px;    
 }
 #latestnews tr{
-	text-align:center;
+  text-align:center;
 }
 .success {
  color: blue;

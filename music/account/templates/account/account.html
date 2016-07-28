@@ -1,4 +1,17 @@
 {% extends "main/main.html" %}
 {% block heading %}個人首頁{% endblock %}
 {% block content %}
+<div class="row container">
+  {% if account %}
+    {% if userprofile %}
+      {% for UserProfile in userprofile %}
+        <div>
+        <img src="{{UserProfile.photoUrl}}" class="col-md-3 img-circle text-center"><a href={% url 'account:photoUrlUpdate' user.id %}>pho</a>  
+        </div>
+        <div class="col-md-7">{{UserProfile.profile}}<a href={% url 'account:profileUpdate' user.id %}>pro</a></div>
+        <div class="col-md-2"><input class="btn btn-default" type="button" value="Input"></div>
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+</div>
 {% endblock %}

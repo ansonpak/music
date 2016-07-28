@@ -1,11 +1,22 @@
-from django.shortcuts import render, redirect
-from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from account.forms import UserForm, UserProfileForm
+from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+from django.shortcuts import render, redirect, get_object_or_404
+
+from account.forms import UserForm, UserProfileForm, PhotoUrlForm, ProfileForm
+from account.models import UserProfile
 
 
+def account(request, userID):
+    account = get_object_or_404(User, id=userID)
+    context = {
+        'account': account,
+        'userprofile': UserProfile.objects.filter(user=account)
+    }
+    return render(request, 'account/account.html', context)
+    
 def register(request):
     template = 'account/register.html'
     if request.method=='GET':
@@ -47,3 +58,30 @@ def userLogout(request):
     logout(request)
     messages.success(request, '歡迎再度光臨')
     return redirect(reverse('main:main'))
+
+
+def photoUrlUpdate(request, userID):
+    userProfile = get_object_or_404(UserProfile, id=userID)
+    template = 'account/photoUrlUpdate.html'
+    if request.method=='GET':
+        form = PhotoUrlForm(instance=userProfile)
+        return render(request, template, {'form':form, 'userProfile':userProfile})
+    # POST
+    form = PhotoUrlForm(request.POST, instance=userProfile)
+    if not form.is_valid():
+        return render(request, template, {'form':form, 'userProfile':userProfile})
+    form.save()
+    return redirect('account:account', userID=userID)
+
+def profileUpdate(request, userID):
+    userProfile = get_object_or_404(UserProfile, id=userID)
+    template = 'account/profileUpdate.html'
+    if request.method=='GET':
+        form = ProfileForm(instance=userProfile)
+        return render(request, template, {'form':form, 'userProfile':userProfile})
+    # POST
+    form = ProfileForm(request.POST, instance=userProfile)
+    if not form.is_valid():
+        return render(request, template, {'form':form, 'userProfile':userProfile})
+    form.save()
+    return redirect('account:account', userID=userID)
